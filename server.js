@@ -67,11 +67,12 @@ app.delete("/api/notes/:id", function(req, res) {
     // for (let x = 0; x < dbFile.length; x++) {
     //     if (dbFile[x].id.toString() === chose) {
     //       dbFile.splice(x, 1);
+    //       console.log(dbFile,"==================================================>")
     //       break;
     //     }
     //   }
 
-    console.log(deleteNote)
+    // console.log(deleteNote)
 
     fs.writeFileSync(path.join(__dirname, "/db/db.json"), JSON.stringify(dbFile));
     res.sendFile(path.join(__dirname, "/db/db.json"));
