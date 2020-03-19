@@ -50,14 +50,33 @@ app.post("/api/notes", function(req, res) {
     return res.json(db);
 });
 
-app.get("/api/notes/:id", function(req, res) {
+app.delete("/api/notes/:id", function(req, res) {
     // should delete the notes based on their id 
 
-    let notesData = fs.readFileSync(db);
+    // let notesData = fs.readFileSync(db);
+
+    const db = fs.readFileSync(path.join(__dirname, "/db/db.json"));
+    const dbFile = JSON.parse(db);
 
     var chose = req.params.id;
 
+    var deleteNote = db.filter(data => {
+        data.id != chose;
+    });
+
+    // for (let x = 0; x < dbFile.length; x++) {
+    //     if (dbFile[x].id.toString() === chose) {
+    //       dbFile.splice(x, 1);
+    //       break;
+    //     }
+    //   }
+
+    console.log(deleteNote)
+
+    fs.writeFileSync(path.join(__dirname, "/db/db.json"), JSON.stringify(dbFile));
+    res.sendFile(path.join(__dirname, "/db/db.json"));
     
+    // fs.writeFileSync(db, res.json(db));
     
 });
 
