@@ -10,6 +10,10 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
-    "mysql": "^2.16.0"
+    "install": "^0.13.0",
+    "mysql": "^2.16.0",
+    "uniqid": "^5.2.0",
+    "unpm": "^1.5.0",
+    "uuidv1": "^1.6.14"
   }
 }

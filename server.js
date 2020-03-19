@@ -1,8 +1,10 @@
 // Dependencies
 // =============================================================
-var express = require("express");
-var path = require("path");
-var db = require("./db/db.json");
+const express = require("express");
+const path = require("path");
+const db = require("./db/db.json");
+const uniqid = require('uniqid');
+const fs = require('fs');
 
 // Sets up the Express App
 // =============================================================
@@ -27,26 +29,35 @@ app.get("/notes", function(req, res) {
 
 app.get("/api/notes", function(req, res) {
     // should read the db.json file
-    console.log(db)
+    // console.log(db)
     res.json(db);
 });
 
 app.post("/api/notes", function(req, res) {
     // should receive a new note to save to the request body, add to db.json and return to the client 
-    // console.log(res);
+    
     var newNote = req.body;
+    var newID = uniqid();
 
+    newNote.id = newID;
+    
     db.push(newNote);
 
     res.json(newNote);
+
+    fs.writeFileSync(db,res.json(db))
 
     return res.json(db);
 });
 
 app.get("/api/notes/:id", function(req, res) {
     // should delete the notes based on their id 
+
+    let notesData = fs.readFileSync(db);
+
     var chose = req.params.id;
 
+    
     
 });
 
