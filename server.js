@@ -30,7 +30,8 @@ app.get("/notes", function(req, res) {
 app.get("/api/notes", function(req, res) {
     // should read the db.json file
     // console.log(db)
-    res.json(db);
+    // res.json(db);
+    res.sendFile(path.join(__dirname, "/db/db.json"));
 });
 
 app.post("/api/notes", function(req, res) {
