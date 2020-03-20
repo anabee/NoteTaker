@@ -40,14 +40,26 @@ app.post("/api/notes", function(req, res) {
     var newID = uniqid();
 
     newNote.id = newID;
+
     
-    db.push(newNote);
+    // db.push(newNote);
+    fs.readFile("./db/db.json", (err, data) => {
+        if (err) throw err;
+        let dbFile = JSON.parse(data);
+       //push into note
+       dbFile.push(newNote);
+       //write to file
+         fs.writeFile("./db/db.json", JSON.stringify(dbFile), "utf8", err => {
+             if (err) throw err;
+             console.log("The data was saved to file!");
+           });
+        });
 
-    res.json(newNote);
+    // res.json(newNote);
+    // const dbFile = JSON.parse(db);
+    // fs.writeFileSync(path.join(__dirname),JSON.stringify(dbFile))
 
-    fs.writeFileSync(db,res.json(db))
-
-    return res.json(db);
+    res.redirect("/notes");
 });
 
 app.delete("/api/notes/:id", function(req, res) {
@@ -60,22 +72,24 @@ app.delete("/api/notes/:id", function(req, res) {
 
     var chose = req.params.id;
 
-    var deleteNote = db.filter(data => {
-        data.id != chose;
-    });
+    // var deleteNote = db.filter(data => {
+    //     data.id != chose;
+    // });
 
-    // for (let x = 0; x < dbFile.length; x++) {
-    //     if (dbFile[x].id.toString() === chose) {
-    //       dbFile.splice(x, 1);
-    //       console.log(dbFile,"==================================================>")
-    //       break;
-    //     }
-    //   }
+    for (let x = 0; x < dbFile.length; x++) {
+        if (dbFile[x].id.toString() === chose) {
+          dbFile.splice(x, 1);
+          console.log(dbFile,"==================================================>")
+          break;
+        }
+      }
 
     // console.log(deleteNote)
 
     fs.writeFileSync(path.join(__dirname, "/db/db.json"), JSON.stringify(dbFile));
-    res.sendFile(path.join(__dirname, "/db/db.json"));
+    // res.sendFile(path.join(__dirname, "/db/db.json"));
+
+    res.sendStatus(200);
     
     // fs.writeFileSync(db, res.json(db));
     
