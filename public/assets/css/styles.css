@@ -4,6 +4,14 @@ html, body {
   padding: 0;
 }
 
+.navbar {
+  background-color: #8EBC91 !important;
+}
+
+.delete-note {
+  color: #4B5C4C !important;
+}
+
 .save-note {
   display: none;
 }
